@@ -80,11 +80,70 @@ int pivot_index(const vector<int> &nums) {
     return -1;
 }
 
+/* Isomorphic strings Leetcode.
+ * Given two strings s and t, determine if they are isomorphic.
+
+Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.*/
+
+bool is_isomorphic(const string &s, const string &t) {
+    unordered_map<char, char> map_st{};
+    unordered_map<char, char> map_ts{};
+
+    if(s.size() != t.size()) {return false;}
+
+    for(int i = 0; i < s.size(); i++) {
+        map_st[s[i]] = t[i];
+        map_ts[t[i]] = s[i];
+    }
+
+    if(map_ts.size() != map_st.size()) {return false;}
+
+    for(int j = 0; j < s.size(); j++) {
+        if(map_st[s[j]] != t[j]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/*Is subsequence algo Leetcode...
+ *Given two strings s and t, return true if s is a subsequence of t, or false otherwise.
+
+A subsequence of a string is a new string that is formed from the original string by deleting some
+ (can be none) of the characters without disturbing the relative positions of the remaining characters.
+ (i.e., "ace" is a subsequence of "abcde" while "aec" is not). */
+
+bool is_subsequence(const string &s, const string &t) {
+    //counter for matches
+    int match_count {0};
+//    initialize pointers
+    int left_p {0}, right_p{0};
+
+    while(left_p < s.length() && right_p < t.length()) {
+        if(s[left_p] == t[right_p]) {
+            match_count += 1;
+            left_p += 1;
+        }
+        right_p += 1;
+    }
+    return match_count == s.length();
+}
+
+/*Merge two sorted linked lists Leetcode
+ * You are given the heads of two sorted linked lists list1 and list2.
+
+Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+Return the head of the merged linked list.*/
+
+
+
+
 int main() {
 
-    vector<int> vec {10, 20, 20, 10, 10, 30, 50, 10, 20};
-    cout << pivot_index({1, 2, 3}) << endl;
-
+    cout << is_subsequence("axc", "ahbgdc") << endl;
 
     return 0;
 }
