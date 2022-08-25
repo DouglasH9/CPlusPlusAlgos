@@ -182,7 +182,22 @@ ListNode* merge_two_lists_iterative(ListNode* list1, ListNode* list2) {
     head = head->next;
     return head;
 }
+//___________________________________________________________________
+/*Reversing a linked list Leetcode
+ * Given the head of a singly linked list, reverse the list, and return the reversed list.*/
 
+ListNode* reverse_list(ListNode* head) {
+    ListNode* prev_node = nullptr;
+    ListNode* curr_node = head;
+
+    while(curr_node != nullptr) {
+        ListNode* next_node = curr_node->next;
+        curr_node->next = prev_node;
+        prev_node = curr_node;
+        curr_node = next_node;
+    }
+    return prev_node;
+}
 
 
 int main() {
