@@ -198,11 +198,32 @@ ListNode* reverse_list(ListNode* head) {
     }
     return prev_node;
 }
+//_______________________________________________________________________
+
+/*Middle of linked list Leetcode
+ * Given the head of a singly linked list, return the middle node of the linked list.
+
+If there are two middle nodes, return the second middle node.*/
+
+ListNode* find_middle_node(ListNode* head) {
+    int length{1};
+    ListNode* return_node = head;
+    while(head->next != nullptr) {
+        head = head->next;
+        length += 1;
+    }
+    for(int i = 0; i < length/2; i++) {
+        return_node = return_node->next;
+    }
+    return return_node;
+}
+
+
 
 
 int main() {
 
-    cout << is_subsequence("axc", "ahbgdc") << endl;
+
 
     return 0;
 }
