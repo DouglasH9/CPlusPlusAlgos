@@ -297,18 +297,14 @@ int longest_palindrome(const string &str) {
     unordered_map<char, int> char_count{};
     int pal_count{0};
 
-    for(char c: str) {
+    for(char c: str)
         char_count[c] += 1;
-    }
 
-    for(pair<char, int> letter: char_count) {
-        if(letter.second % 2 == 0) {
+    for(pair<char, int> letter: char_count)
+        if(letter.second % 2 == 0)
             pal_count += letter.second;
-        }
-        else if (letter.second % 2 == 1) {
+        else if (letter.second % 2 == 1)
             pal_count += letter.second / 2 * 2;
-        }
-    }
 
     if(pal_count < str.length())
         pal_count += 1;
