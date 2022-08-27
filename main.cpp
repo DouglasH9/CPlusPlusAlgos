@@ -280,10 +280,46 @@ int max_profit_fast(const vector<int> &prices) {
     return largest_profit;
 }
 
+//_________________________________________________________________
+/*Longest palindrome Leetcode.
+ * Given a string s which consists of lowercase or uppercase letters,
+ * return the length of the longest palindrome that can be built with those letters.
+
+Letters are case sensitive, for example, "Aa" is not considered a palindrome here.
+
+ Example 1:
+
+    Input: s = "abccccdd"
+    Output: 7
+    Explanation: One longest palindrome that can be built is "dccaccd", whose length is 7.*/
+
+int longest_palindrome(const string &str) {
+    unordered_map<char, int> char_count{};
+    int pal_count{0};
+
+    for(char c: str) {
+        char_count[c] += 1;
+    }
+
+    for(pair<char, int> letter: char_count) {
+        if(letter.second % 2 == 0) {
+            pal_count += letter.second;
+        }
+        else if (letter.second % 2 == 1) {
+            pal_count += letter.second / 2 * 2;
+        }
+    }
+
+    if(pal_count < str.length())
+        pal_count += 1;
+
+    return pal_count;
+}
+
 
 int main() {
 
-    cout << max_profit_fast({ 7, 1, 5, 3, 6, 4 }) << endl;
+    cout << longest_palindrome("abccccdd") << endl;
 
     return 0;
 }
