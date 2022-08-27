@@ -3,6 +3,7 @@
 #include <vector>
 #include <unordered_map>
 #include <set>
+#include <climits>
 
 using namespace std;
 
@@ -240,11 +241,49 @@ ListNode* detect_cycle(ListNode* head) {
     }
     return nullptr;
 }
+//________________________________________________________________
+/*Best time to buy and sell stock Leetcode
+ *
+ * You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+Example:
+    Input: prices = [7,1,5,3,6,4]
+    Output: 5
+    Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+    Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.*/
+
+//Brute force solution, nested loops...
+int max_profit(const vector<int> &prices) {
+    int largest_dif{0};
+    for(int i = 0; i < prices.size(); i++)
+        for(int j = i + 1; j < prices.size(); j++) {
+            if(prices[j] - prices[i] > largest_dif)
+                largest_dif = prices[j] - prices[i];
+        }
+    return largest_dif;
+}
+//One pass through...
+int max_profit_fast(const vector<int> &prices) {
+    int largest_profit{0};
+    int lowest_price{INT_MAX};
+    for(int i = 0; i < prices.size(); i++) {
+        if(prices[i] < lowest_price)
+            lowest_price = prices[i];
+        else if(prices[i] - lowest_price > largest_profit) {
+            largest_profit = prices[i] - lowest_price;
+        }
+    }
+    return largest_profit;
+}
 
 
 int main() {
 
-
+    cout << max_profit_fast({ 7, 1, 5, 3, 6, 4 }) << endl;
 
     return 0;
 }
