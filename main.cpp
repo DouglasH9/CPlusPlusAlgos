@@ -312,10 +312,54 @@ int longest_palindrome(const string &str) {
     return pal_count;
 }
 
+/*BINARY SEARCH non leetcode with recursion...
+ .*/
+
+int bin_search(const vector<int> &nums, int target, int left_idx, int right_idx) {
+    int middle = (left_idx + right_idx) / 2;
+
+    if(left_idx > right_idx)
+        return -1;
+    else {
+        if (nums[middle] == target)
+            return middle;
+        else if(target < middle)
+            return bin_search(nums, target, left_idx, middle -1);
+        else if(target > middle)
+            return bin_search(nums, target, middle + 1, right_idx);
+        else
+            return -1;
+    }
+}
+/*BINARY SEARCH leetcode
+ ** Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to search target in nums.
+ * If target exists, then return its index. Otherwise, return -1.
+
+You must write an algorithm with O(log n) runtime complexity*/
+
+int leet_bin_search(const vector<int> &nums, int target) {
+    int left = 0;
+    int right = nums.size() - 1;
+    int middle = (left + right) / 2;
+
+
+    while(right >= left) {
+        middle = left + (right - left) / 2;
+        if(target == nums[middle])
+            return middle;
+        else if(target < nums[middle])
+            right = middle - 1;
+        else if(target > nums[middle])
+            left = middle + 1;
+    }
+    return -1;
+}
+
 
 int main() {
+    vector<int> num_vec = { -1, 0, 3, 5, 9, 12 };
 
-    cout << longest_palindrome("abccccdd") << endl;
+    cout << leet_bin_search(num_vec , 99) << endl;
 
     return 0;
 }
