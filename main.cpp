@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <set>
 #include <climits>
+#include <deque>
+#include <queue>
 
 using namespace std;
 
@@ -392,6 +394,49 @@ int first_bad_version(int n) {
         }
     }
     return left;
+}
+
+/*BINARY TREE LEVEL ORDER TRAVERSAL
+ *
+ * Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+ *
+ *            3
+ *         /     \
+ *        9       20
+ *      / \       / \
+*    null null  15   7
+ *
+ * EXAMPLE:
+ *  Input: root = [3,9,20,null,null,15,7]
+    Output: [[3],[9,20],[15,7]]*/
+
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int val) : val(x) left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+vector<vector<int>> levelOrder(TreeNode* root) {
+    vector<vector<int>> result;
+    if(!root) return result;
+    deque<TreeNode*> cue;
+    cue.push_back(root);
+    while(!cue.empty()) {
+        int cue_len = cue.size();
+        vector<int> row;
+        for (int i = 0; i < cue_len; i++) {
+            TreeNode* current = cue.front();
+            cue.pop_front();
+            row.push_back(current->val);
+            if(current->left) cue.push_back(current->left);
+            if(current->right) cue.push_back(current->right);
+        }
+        result.push_back(row);
+    }
+    return result;
 }
 
 int main() {
