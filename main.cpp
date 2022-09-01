@@ -483,17 +483,38 @@ TreeNode* invert_tree_iter(TreeNode *root) {
  * Given a root node of a binary tree, find the maximum depth...*/
 
 //RECURSION...
-int max_depth(TreeNode *root) {
+int max_depth_recur(TreeNode *root) {
     if(root == nullptr) { return 0; }
-    int left = max_depth(root->left);
-    int right = max_depth(root->right);
+    int left = max_depth_recur(root->left);
+    int right = max_depth_recur(root->right);
     return std::max(left, right) + 1;
+}
+
+//ITERATION
+int max_depth_iter(TreeNode *root) {
+    queue<TreeNode*> cue;
+    int levels{0};
+
+    if(root == nullptr) { return 0; }
+    cue.push(root);
+
+    while(!cue.empty()) {
+        int cue_size = cue.size();
+        for(int i = 0; i < cue_size; i++) {
+            TreeNode *current = cue.front();
+            cue.pop();
+            if(current->left != nullptr) { cue.push(current->left); }
+            if(current->right != nullptr) { cue.push(current->right); }
+        }
+        levels += 1;
+    }
+    return levels;
 }
 
 int main() {
     vector<int> num_vec = { -1, 0, 3, 5, 9, 12 };
 
-    cout << max_depth() << endl;
+    cout << max_depth_recur() << endl;
 
     return 0;
 }
