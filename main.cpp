@@ -415,7 +415,7 @@ struct TreeNode {
     TreeNode *left;
     TreeNode *right;
     TreeNode() : val(0), left(nullptr), right(nullptr) {}
-    TreeNode(int val) : val(x) left(nullptr), right(nullptr) {}
+//    TreeNode(int val) : val(vl), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
@@ -439,10 +439,61 @@ vector<vector<int>> levelOrder(TreeNode* root) {
     return result;
 }
 
+/*INVERT BINARY TREE Leetcode
+ *
+ * Given the root of a binary tree, invert the tree, and return its root.*/
+
+
+//RECURSION
+TreeNode* invert_tree_recur(TreeNode* root) {
+    if(root != nullptr) {
+        invert_tree_recur(root->left);
+        invert_tree_recur(root->right);
+        //swap nodes
+        //temp node to store right node...
+        TreeNode *temp_node = root->right;
+        root->right = root->left;
+        root->left = temp_node;
+    }
+    return root;
+}
+
+//ITERATIVE
+TreeNode* invert_tree_iter(TreeNode *root) {
+    if (root != nullptr) {
+        queue<TreeNode*> cue;
+        cue.push(root);
+
+        while(!cue.empty()) {
+            TreeNode *current = cue.front();
+            cue.pop();
+            TreeNode *temp_node = current->right;
+            current->right = current->left;
+            current->left = temp_node;
+
+            if(current->left != nullptr) { cue.push(current->left); }
+            if(current->right != nullptr) { cue.push(current->right); }
+        }
+    }
+    return root;
+}
+
+/*MAX DEPTH OF A BINARY TREE Leetcode
+ *
+ * Given a root node of a binary tree, find the maximum depth...*/
+
+//RECURSION...
+int max_depth(TreeNode *root) {
+    if(root == nullptr) { return 0; }
+    int left = max_depth(root->left);
+    int right = max_depth(root->right);
+    return std::max(left, right) + 1;
+}
+
 int main() {
     vector<int> num_vec = { -1, 0, 3, 5, 9, 12 };
 
-    cout << leet_bin_search(num_vec , 99) << endl;
+    cout << max_depth() << endl;
 
     return 0;
 }
