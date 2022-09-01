@@ -490,7 +490,7 @@ int max_depth_recur(TreeNode *root) {
     return std::max(left, right) + 1;
 }
 
-//ITERATION
+//ITERATION BFS
 int max_depth_iter(TreeNode *root) {
     queue<TreeNode*> cue;
     int levels{0};
@@ -511,10 +511,30 @@ int max_depth_iter(TreeNode *root) {
     return levels;
 }
 
+//ITERATIVE DFS
+int max_depth_iter_dfs(TreeNode *root) {
+    if (root == nullptr) return 0;
+
+    vector<pair<int, TreeNode *>> big_stack;
+    big_stack.push_back(pair<int, TreeNode *>(1, root));
+    int max_depth{0};
+
+    while(!big_stack.empty()) {
+        pair<int, TreeNode *> current_pair = big_stack.back();
+        int current_depth = current_pair.first;
+        TreeNode *current_node = current_pair.second;
+        max_depth = std::max(max_depth, current_pair.first);
+        big_stack.pop_back();
+        if (current_pair.second->left != nullptr) big_stack.push_back(pair<int,TreeNode *>(current_depth +1, current_node->left));
+        if (current_pair.second->right != nullptr) big_stack.push_back(pair<int,TreeNode *>(current_depth +1, current_node->right));
+    }
+    return max_depth;
+}
+
 int main() {
     vector<int> num_vec = { -1, 0, 3, 5, 9, 12 };
 
-    cout << max_depth_recur() << endl;
+
 
     return 0;
 }
