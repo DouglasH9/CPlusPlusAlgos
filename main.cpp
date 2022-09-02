@@ -531,6 +531,61 @@ int max_depth_iter_dfs(TreeNode *root) {
     return max_depth;
 }
 
+//DIAMETER OF A BINARY TREE Leetcode
+/*Given the root of a binary tree, return the length of the diameter of the tree.
+
+The diameter of a binary tree is the length of the longest path between any two nodes in a tree.
+ This path may or may not pass through the root.
+
+The length of a path between two nodes is represented by the number of edges between them.*/
+
+
+
+int height_of_bin_tree_helper_for_diameter(TreeNode *current_node, int &diameter) {
+    if (current_node == nullptr) return 0;
+
+    int left_height = height_of_bin_tree_helper_for_diameter(current_node->left, diameter);
+    int right_height = height_of_bin_tree_helper_for_diameter(current_node->right, diameter);
+
+    diameter = max(diameter, left_height + right_height);
+    return 1 + max(left_height, right_height);
+}
+
+int diameter_of_bin_tree(TreeNode *root) {
+    int diameter = 0;
+    height_of_bin_tree_helper_for_diameter(root, diameter);
+    return diameter;
+}
+
+/*BALANCED BINARY TREE
+ *
+ *Given a binary tree, determine if it is height-balanced.
+
+For this problem, a height-balanced binary tree is defined as:
+
+a binary tree in which the left and right subtrees of every node differ in height by no more than 1. */
+
+bool balanced_tree_helper(TreeNode *root, int &height) {
+    if (root == nullptr) {
+        height = -1;
+        return true;
+    }
+    int left_height, right_height;
+    if ((balanced_tree_helper(root->left, left_height) &&
+        (balanced_tree_helper(root->right, right_height) &&
+        (abs(left_height - right_height) < 2)))) {
+            height = max(left_height, right_height) + 1;
+            return true;
+    }
+    return false;
+
+}
+
+bool balanced_bin_tree(TreeNode *root) {
+    int height;
+    return balanced_tree_helper(root, height);
+}
+
 int main() {
     vector<int> num_vec = { -1, 0, 3, 5, 9, 12 };
 
